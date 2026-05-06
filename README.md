@@ -1,2 +1,2 @@
 # brightworldtech-docusaurus
-# brightworldtech-docusaurus
+Bright World Documentation
