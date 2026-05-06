@@ -3,12 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ebdallas-docs
+    container_name: bwtdallas-docs
     restart: unless-stopped
 
     # You asked for /app as the mount point, and docs at /app/docs:
     volumes:
-      - /ebdallas:/app
+      - /bwtdallas:/app
 
     networks:
       - proxy
@@ -18,24 +18,24 @@ services:
       - traefik.docker.network=proxy
 
       # =========
-      # (A) docs.ebdallas.com -> serve the docs site
+      # (A) docs.bwtdallas.com -> serve the docs site
       # =========
-      - traefik.http.routers.ebdallas-docs.rule=Host(`docs.ebdallas.com`)
-      - traefik.http.routers.ebdallas-docs.entrypoints=https
-      - traefik.http.routers.ebdallas-docs.tls=true
-      - traefik.http.routers.ebdallas-docs.tls.certresolver=cloudflare
-      - traefik.http.services.ebdallas-docs.loadbalancer.server.port=80
+      - traefik.http.routers.bwtdallas-docs.rule=Host(`docs.bwtdallas.com`)
+      - traefik.http.routers.bwtdallas-docs.entrypoints=https
+      - traefik.http.routers.bwtdallas-docs.tls=true
+      - traefik.http.routers.bwtdallas-docs.tls.certresolver=cloudflare
+      - traefik.http.services.bwtdallas-docs.loadbalancer.server.port=80
 
       # =========
-      # (B) OPTIONAL: ebdallas.com/docs -> redirect to docs.ebdallas.com
+      # (B) OPTIONAL: bwtdallas.com/docs -> redirect to docs.bwtdallas.com
       # =========
-      - traefik.http.routers.ebdallas-docs-redirect.rule=Host(`ebdallas.com`) && PathPrefix(`/docs`)
-      - traefik.http.routers.ebdallas-docs-redirect.entrypoints=https
-      - traefik.http.routers.ebdallas-docs-redirect.tls=true
-      - traefik.http.routers.ebdallas-docs-redirect.tls.certresolver=cloudflare
-      - traefik.http.routers.ebdallas-docs-redirect.middlewares=docs-redirect@docker
-      - traefik.http.middlewares.docs-redirect.redirectregex.regex=^https?://ebdallas\.com/docs/?(.*)
-      - traefik.http.middlewares.docs-redirect.redirectregex.replacement=https://docs.ebdallas.com/$$1
+      - traefik.http.routers.bwtdallas-docs-redirect.rule=Host(`bwtdallas.com`) && PathPrefix(`/docs`)
+      - traefik.http.routers.bwtdallas-docs-redirect.entrypoints=https
+      - traefik.http.routers.bwtdallas-docs-redirect.tls=true
+      - traefik.http.routers.bwtdallas-docs-redirect.tls.certresolver=cloudflare
+      - traefik.http.routers.bwtdallas-docs-redirect.middlewares=docs-redirect@docker
+      - traefik.http.middlewares.docs-redirect.redirectregex.regex=^https?://bwtdallas\.com/docs/?(.*)
+      - traefik.http.middlewares.docs-redirect.redirectregex.replacement=https://docs.bwtdallas.com/$$1
       - traefik.http.middlewares.docs-redirect.redirectregex.permanent=true
 
 networks:
